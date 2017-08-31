@@ -1,0 +1,20 @@
+#!/bin/bash
+
+COUCHDB_USER=${COUCHDB_USER:-admin}
+COUCHDB_PASSWORD=${COUCHDB_PASSWORD:-password}
+COUCH_CONFIG=/opt/couchdb/etc
+HEADLESS_SERVICE_NAME=${HEADLESS_SERVICE_NAME:-couchdb-internal}
+NAMESPACE=${NAMESPACE:-`cat /var/run/secrets/kubernetes.io/serviceaccount/namespace`}
+
+echo "-name couchdb@${POD_NAME}.${HEADLESS_SERVICE_NAME}.${NAMESPACE}.svc.cluster.local" >> $COUCH_CONFIG/vm.args
+
+echo -e "[admins]\n${COUCHDB_USER} = ${COUCHDB_PASSWORD}" >  $COUCH_CONFIG/local.d/admin.ini
+
+if [[ "$DELAYED_COMMITS" != "false" ]]; then
+cat <<DELAYED_COMMITS >  $COUCH_CONFIG/local.d/delayed_commits.ini
+[couchdb]
+delayed_commits = true
+DELAYED_COMMITS
+fi
+
+/opt/couchdb/bin/couchdb $*

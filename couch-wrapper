@@ -17,6 +17,6 @@ delayed_commits = true
 DELAYED_COMMITS
 fi
 
-chown -R /opt/couchdb
+chown -R couchdb:couchdb /opt/couchdb
 
 su -m couchdb -c /opt/couchdb/bin/couchdb $*

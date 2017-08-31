@@ -28,6 +28,8 @@ func main() {
 	if isLastNode() == true {
 		configureCluster()
 		finishCluster() }
+
+	select{}  // sleep forever
 }
 
 func waitForCouch() {

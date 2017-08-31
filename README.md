@@ -16,7 +16,7 @@ Update the `storage` field under the `volumeClaimTemplates` to an appropriate va
 
 Update the environment variables `COUCHDB_USER` and `COUCHDB_PASSWORD` if security is a concern.
 
-If you decide to rename the headless service, you will need to add an environment variable `HEADLESS_SERVICE_NAME` with the new name to both containers environments.
+If you decide to rename the headless service, you will need to add an environment variable `HEADLESS_SERVICE_NAME` with the new name to both containers' environments.
 
 #### Deploy the StatefulSet
 

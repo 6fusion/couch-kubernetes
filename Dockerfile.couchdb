@@ -1,0 +1,32 @@
+FROM centos:7
+MAINTAINER Peyton Vaughn <pvaughn@6fusion.com>
+
+EXPOSE 5984 4369 9100
+
+ENV TERM xterm
+
+COPY couchdb.repo /etc/yum.repos.d/bintray-apache-couchdb-rpm.repo
+COPY couch-wrapper /opt/bin/couch-wrapper
+
+# Add couch user with deterministic uid/gid so we don't run into ownership issues for volume mounts
+# epel-release has sum dependencies that couchdb needs
+RUN groupadd -g 1000 -r couchdb && \
+    adduser -c "CouchDB Administrator" -d /opt/couchdb -g 1000 -M -s /bin/bash -u 1000 couchdb && \
+    yum -y install epel-release && \
+    yum -y install couchdb
+
+# Remove filelog so we log to the console
+# Remove vm.args so we can add our own
+RUN rm -f /opt/couchdb/etc/default.d/10-filelog.ini && \
+    rm -f /opt/couchdb/etc/vm.args && \
+    sed -i '/bind_address/ s/127.0.0.1/0.0.0.0/' /opt/couchdb/etc/default.ini
+
+COPY vm.args /opt/couchdb/etc/vm.args
+RUN chown -R couchdb:couchdb /opt/couchdb
+
+USER couchdb
+
+ENTRYPOINT ["/opt/bin/couch-wrapper"]
+
+
+

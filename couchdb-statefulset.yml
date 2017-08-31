@@ -1,0 +1,70 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: couchdb-internal
+spec:
+  ports:
+  - name: couchdb-port
+    port: 5984
+  selector:
+    couch-app: database
+  clusterIP: None
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: couchdb
+spec:
+  ports:
+  - name: couchdb-port
+    port: 5984
+  selector:
+    couch-app: database
+---
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: couchdb
+spec:
+  serviceName: couchdb-internal
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        couch-app: database
+    spec:
+      containers:
+      - name: cluster-sidecar
+        image: docker.io/6fusion/couchdb-sidecar:alpha
+        imagePullPolicy: Always
+      - name: couchdb
+        image: docker.io/6fusion/couchdb:alpha
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5984
+          name: couchdb-port
+        - containerPort: 4369
+          name: epmd-port
+        - containerPort: 9100
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: COUCHDB_USER
+          value: admin
+        - name: COUCHDB_PASSWORD
+          value: password
+        volumeMounts:
+        - name: data
+          mountPath: /opt/couchdb/data
+      imagePullSecrets:
+      - name: meter-registry
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi

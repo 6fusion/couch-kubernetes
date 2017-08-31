@@ -1,0 +1,11 @@
+package: couch-sidecar
+import:
+- package: k8s.io/client-go
+  version: d05464429a0d456f3153092eacb09267e216f9b7
+  subpackages:
+  - 1.5/rest
+  - 1.5/tools/clientcmd
+- package: github.com/emicklei/go-restful
+  version: v1.2
+- package: github.com/Sirupsen/logrus
+  version: ~0.10.0

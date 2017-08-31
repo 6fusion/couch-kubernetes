@@ -1,0 +1,19 @@
+hash: 4e8c68360d719f69235bdc60fa7ff598f6eb5ae50826ed4768dd25436a9e14b8
+updated: 2017-08-31T13:29:24.859009682-04:00
+imports:
+- name: github.com/emicklei/go-restful
+  version: 777bb3f19bcafe2575ffb2a3e46af92509ae9594
+- name: github.com/Sirupsen/logrus
+  version: 4b6ea7319e214d98c938f12692336f7ca9348d6b
+- name: golang.org/x/sys
+  version: ab9e364efd8b52800ff7ee48a9ffba4e0ed78dfb
+  subpackages:
+  - unix
+- name: k8s.io/client-go
+  version: d05464429a0d456f3153092eacb09267e216f9b7
+  subpackages:
+  - 1.5/rest
+  - 1.5/tools/clientcmd
+testImports:
+- name: github.com/patrickjuchli/couch
+  version: 426bf552161bdde2865a41791b22d0ca45a918eb

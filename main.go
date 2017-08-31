@@ -127,7 +127,7 @@ func enableCluster() {
 	// log.Debug("Enable cluster response: ", resp)
 }
 
-func postToCouch(url, buffer) {
+func postToCouch(url string, buffer *bytes.Buffer) {
 	req, err := http.NewRequest("POST", url, buffer)
 	req.SetBasicAuth(couchdbUser(), couchdbPassword())
 	req.Header.Add("Content-Type", "application/json")

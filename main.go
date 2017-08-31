@@ -29,6 +29,7 @@ func main() {
 		configureCluster()
 		finishCluster() }
 
+	log.Info("Configuration completed")
 	select{}  // sleep forever
 }
 
@@ -49,8 +50,8 @@ func exitIfCouchConfigured() {
 	defer resp.Body.Close()
 
 	if ( resp.StatusCode == 200 ){
-		log.Info("CouchDB appears to be configured. Exiting.")
-		os.Exit(0) } }
+		log.Info("CouchDB appears to be configured. Sleeping.")
+		select{} } }
 
 
 func expectedReplicaCount() (int) {

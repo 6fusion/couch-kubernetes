@@ -7,3 +7,5 @@ import:
   - 1.5/tools/clientcmd
 - package: github.com/emicklei/go-restful
   version: v1.2
+- package: github.com/Sirupsen/logrus
+  version: ~0.10.0

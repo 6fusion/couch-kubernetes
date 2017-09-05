@@ -61,10 +61,11 @@ func expectedReplicaCount() (int) {
 		Kind string          `json:"kind"`
 		Spec StatefulSetSpec `json:"spec"` }
 
-	couchStatefulsetStatusURI := fmt.Sprintf("https://%s:%s/apis/apps/v1beta1/namespaces/%s/statefulsets/couchdb/status",
+	couchStatefulsetStatusURI := fmt.Sprintf("https://%s:%s/apis/apps/v1beta1/namespaces/%s/statefulsets/%s/status",
 																					 os.Getenv("KUBERNETES_SERVICE_HOST"),
 																					 os.Getenv("KUBERNETES_SERVICE_PORT"),
-																					 namespace())
+																					 namespace(),
+																					statefulSetName)
 
 	req, err := http.NewRequest("GET", couchStatefulsetStatusURI, nil)
 	panicIfError(err)

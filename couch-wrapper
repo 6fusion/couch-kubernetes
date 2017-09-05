@@ -17,7 +17,7 @@ delayed_commits = true
 DELAYED_COMMITS
 fi
 
-chown -R couchdb:couchdb /opt/couchdb
-chown -R couchdb:couchdb /var/lib/couchdb
+chown -LR couchdb:couchdb /opt/couchdb
+echo "Exit code from chown: $?"
 
 su -m couchdb -c /opt/couchdb/bin/couchdb $*

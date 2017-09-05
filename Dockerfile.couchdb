@@ -24,8 +24,6 @@ RUN rm -f /opt/couchdb/etc/default.d/10-filelog.ini && \
 COPY vm.args /opt/couchdb/etc/vm.args
 RUN chown -R couchdb:couchdb /opt/couchdb
 
-#USER couchdb
-
 ENTRYPOINT ["/opt/bin/couch-wrapper"]
 
 

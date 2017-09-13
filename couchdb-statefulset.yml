@@ -37,6 +37,11 @@ spec:
       - name: cluster-sidecar
         image: docker.io/6fusion/couchdb-sidecar:alpha
         imagePullPolicy: Always
+        env:
+        - name: COUCHDB_USER
+          value: admin
+        - name: COUCHDB_PASSWORD
+          value: password
       - name: couchdb
         image: docker.io/6fusion/couchdb:alpha
         imagePullPolicy: Always

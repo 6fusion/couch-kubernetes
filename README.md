@@ -104,7 +104,8 @@ You can test the cluster in a number of ways. As an example:
 
 You should also see shards for the `test` database distrubuted across the nodes
 ```bash
-for pod in $(echo $PODS); do echo "Pod: $pod"; kubectl exec $pod -c couchdb -- /usr/bin/find /opt/couchdb/data/; done | grep -E '(Pod|test)'Pod: couchdb-0
+for pod in $(echo $PODS); do echo "Pod: $pod"; kubectl exec $pod -c couchdb -- /usr/bin/find /opt/couchdb/data/; done | grep -E '(Pod|test)'
+Pod: couchdb-0
 /opt/couchdb/data/shards/a0000000-bfffffff/test.1505578429.couch
 /opt/couchdb/data/shards/20000000-3fffffff/test.1505578429.couch
 /opt/couchdb/data/shards/60000000-7fffffff/test.1505578429.couch

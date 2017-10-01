@@ -11,13 +11,22 @@ echo "-name couchdb@${POD_NAME}.${HEADLESS_SERVICE_NAME}.${NAMESPACE}.svc.cluste
 echo -e "[admins]\n${COUCHDB_USER} = ${COUCHDB_PASSWORD}" >  $COUCH_CONFIG/local.d/admin.ini
 
 if [[ "$DELAYED_COMMITS" != "false" ]]; then
-cat <<DELAYED_COMMITS >  $COUCH_CONFIG/local.d/delayed_commits.ini
+cat <<DELAYED_COMMITS >$COUCH_CONFIG/local.d/delayed_commits.ini
 [couchdb]
 delayed_commits = true
 DELAYED_COMMITS
 fi
 
-chown -R couchdb:couchdb /opt/couchdb
-chown -R couchdb:couchdb /var/lib/couchdb
+N=${N:-1}
+Q=${Q:-8}
+
+cat <<DOCUMENT_COPIES >$COUCH_CONFIG/local.d/sharding.ini
+[cluster]
+n=$N
+q=$Q
+DOCUMENT_COPIES
+
+chown -LR couchdb:couchdb /opt/couchdb
+echo "Exit code from chown: $?"
 
 su -m couchdb -c /opt/couchdb/bin/couchdb $*

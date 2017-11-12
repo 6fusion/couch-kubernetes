@@ -117,4 +117,5 @@ Pod: couchdb-1
 /opt/couchdb/data/shards/00000000-1fffffff/test.1505578429.couch
 ```
 
-
+#### Limitations
+The sidecar is not able to add more nodes once the cluster has been initialized. Currently, you must ensure that the desired number of Pod replicas is set when creating the initial Couch cluster.

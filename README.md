@@ -119,3 +119,15 @@ Pod: couchdb-1
 
 #### Limitations
 The sidecar is not able to add more nodes once the cluster has been initialized. Currently, you must ensure that the desired number of Pod replicas is set when creating the initial Couch cluster.
+
+## Building the sidecar
+**couch-sidecar** is a small go-language application that sets up the CouchDB cluster. While it is already built and available in the
+[6fusion/couchdb-sidecar](https://hub.docker.com/r/6fusion/couchdb-sidecar) docker image, you can build it from source if you prefer.
+It's a small, fairly standard go-language app that relies on [glide](https://github.com/Masterminds/glide) for dependency management.
+
+To create an executable compatible with the `Dockerfile.sidecar` in this repository, you will need to compile a static binary for Linux.
+Assuming you have go installed and configured, you can build the binary by running (from the root of the cloned repository):
+```
+glide install
+GOOS=linux CGO_ENABLED=0 go build -a -ldflags="-s -w" -o couch-sidecar
+```
